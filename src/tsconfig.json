@@ -6,6 +6,11 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": false
-  }
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": false
+  },
+  "files": [
+    "../node_modules/angular2/angular2.d.ts",
+    "app/app.ts"
+  ]
 }
