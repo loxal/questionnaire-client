@@ -8,11 +8,9 @@
         <li *ng-for="#answer of poll.answers"
             (click)="onAnswer(answer)"
         >
-            <span>{{ answer }}</span>
+            <input type="radio" name="answers">{{ answer }}</input>
         </li>
     </ol>
-
-    <button (click)="onAnswer(answer)">Next</button>
 </div>
 
 <h1>{{title}}</h1>
