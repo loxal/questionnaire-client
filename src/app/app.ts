@@ -46,6 +46,21 @@ class AppComponent {
 
     onSelect(hero:Hero) {
         this.selectedHero = hero;
+        var p = new Promise<string>((resolve, reject) => {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://rest-kit-v1.us-east.stage.internal.yaas.io/dilbert-quote/programmer", /*async:*/ true);
+            xhr.onload = event => resolve(xhr.responseText);
+            xhr.onerror = event => reject(xhr.statusText);
+            xhr.send(null);
+        });
+
+        p.then(r => {
+            console.log(r);
+        }).catch(e => {
+            console.log(e);
+        });
+
+        //console.log(p);
     }
 
     getSelectedClass(hero:Hero) {
