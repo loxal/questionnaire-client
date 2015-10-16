@@ -1,34 +1,49 @@
 import {Component, bootstrap, FORM_DIRECTIVES, CORE_DIRECTIVES} from 'angular2/angular2';
+import Poll = DTO.Poll;
+
+module DTO {
+    export interface Poll {
+        id: string;
+        question:  string;
+        answers:   string[];
+    }
+}
 
 @Component({
     directives: [FORM_DIRECTIVES, CORE_DIRECTIVES],
     selector: 'app',
-    styleUrls: ["style.css"],
-    templateUrl: "template.html"
+    styleUrls: ["template/style.css"],
+    templateUrl: "template/question.html"
 })
-
 class AppComponent {
     public heroes = HEROES;
     public title = 'Tour of Heroes';
     public selectedHero:Hero;
 
-    onSelect(hero:Hero) {
-        this.selectedHero = hero;
-        var p = new Promise<string>((resolve, reject) => {
+    getStuff() {
+        var pollResponse = new Promise<any>((resolve, reject) => {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "http://rest-kit-v1.us-east.stage.internal.yaas.io/dilbert-quote/programmer", /*async:*/ true);
-            xhr.onload = event => resolve(xhr.responseText);
+            xhr.open("GET", "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-42e1dd4d7-32f7-4dd2-8d78-5a94a983360b", true);
+            xhr.onload = event => resolve(xhr.response);
             xhr.onerror = event => reject(xhr.statusText);
-            xhr.send(null);
+            xhr.send();
         });
 
-        p.then(r => {
-            console.log(r);
+        pollResponse.then(pollData => {
+            var poll:Poll = JSON.parse(pollData);
+            console.log(poll.question);
+            console.log(poll.answers);
         }).catch(e => {
             console.log(e);
         });
+    }
 
-        //console.log(p);
+    constructor() {
+        this.getStuff();
+    }
+
+    onSelect(hero:Hero) {
+        this.selectedHero = hero;
     }
 
     getSelectedClass(hero:Hero) {
