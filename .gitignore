@@ -1,0 +1,10 @@
+# IntelliJ-specific
+\.idea/workspace\.xml
+out/
+
+node_modules/
+
+*.js.map
+*.js
+
+npm-debug.log
