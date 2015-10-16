@@ -19,11 +19,18 @@ class AppComponent {
     public heroes = HEROES;
     public title = 'Tour of Heroes';
     public selectedHero:Hero;
+    public poll:Poll;
+
+    onAnswer(answer:string) {
+        console.log(answer);
+        console.log(this.poll.answers);
+    }
 
     getStuff() {
         var pollResponse = new Promise<any>((resolve, reject) => {
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-42e1dd4d7-32f7-4dd2-8d78-5a94a983360b", true);
+            const url:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-42e1dd4d7-32f7-4dd2-8d78-5a94a983360b";
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
             xhr.onload = event => resolve(xhr.response);
             xhr.onerror = event => reject(xhr.statusText);
             xhr.send();
@@ -33,8 +40,9 @@ class AppComponent {
             var poll:Poll = JSON.parse(pollData);
             console.log(poll.question);
             console.log(poll.answers);
-        }).catch(e => {
-            console.log(e);
+            this.poll = poll;
+        }).catch(error => {
+            console.log(error);
         });
     }
 

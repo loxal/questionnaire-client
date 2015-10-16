@@ -2,7 +2,19 @@
   ~ Copyright 2015 Alexander Orlov <alexander.orlov@loxal.net>. All rights reserved.
   -->
 
-<strong>{{question}}</strong>
+<div *ng-if="poll">
+    <strong>{{ poll.question }}</strong>
+    <ol>
+        <li *ng-for="#answer of poll.answers"
+            (click)="onAnswer(answer)"
+        >
+            <span>{{ answer }}</span>
+        </li>
+    </ol>
+
+    <button (click)="onAnswer(answer)">Next</button>
+</div>
+
 <h1>{{title}}</h1>
 <div *ng-if="selectedHero">
     <h2>{{selectedHero.name}} details!</h2>
