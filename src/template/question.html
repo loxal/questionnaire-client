@@ -6,9 +6,10 @@
     <strong>{{ poll.question }}</strong>
     <ol>
         <li *ng-for="#answer of poll.answers"
-            (click)="onAnswer(answer)"
         >
-            <input type="radio" name="answers">{{ answer }}</input>
+            <input type="radio" name="answers"
+                   (click)="onAnswer(answer)"
+            >{{ answer }}</input>
         </li>
     </ol>
 </div>

@@ -15,30 +15,51 @@ module DTO {
     styleUrls: ["template/style.css"],
     templateUrl: "template/question.html"
 })
-class AppComponent {
+class QuestionnaireComponent {
     public heroes = HEROES;
     public title = 'Tour of Heroes';
     public selectedHero:Hero;
     public poll:Poll;
+    public questionIdx: number = 0;
 
     onAnswer(answer:string) {
         console.log(answer);
         console.log(this.poll.answers);
+        this.questionIdx++;
+        this.getStuff();
     }
 
     getStuff() {
-        var pollResponse = new Promise<any>((resolve, reject) => {
-            const url:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-42e1dd4d7-32f7-4dd2-8d78-5a94a983360b";
-            let xhr = new XMLHttpRequest();
-            xhr.open("GET", url, true);
-            xhr.onload = event => resolve(xhr.response);
-            xhr.onerror = event => reject(xhr.statusText);
-            xhr.send();
-        });
+        const polls:Array<string> = [
+            "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-10ca791ed-a4a4-48f7-95a8-51df6c9e8bca",
+            "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-2c9fed178-d6d4-436c-86cb-fef2f4d04e20",
+            "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-3b170a2f4-d703-4259-9a6c-1a622416f5ea",
+            "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-4bd8b792f-d805-49a3-9b61-56606d8656fc",
+            "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-50c73578d-71b0-43b1-a585-3f2de6183b5d",
+            "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-6b336bd70-9871-4ef8-bddc-3f0de353ee9c",
+            "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-76d06b2eb-d723-4b9b-859d-d33c86ad5124",
+            "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-870bfc198-d28e-4d59-9826-d3c1b37d292e",
+            "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-9546b4f95-c432-4466-9756-37046762f278",
+            "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-10963314a1-2953-44d7-9afc-5434591eddf9",
+        ];
+
+        let fetchPoll = function (url: string): Promise<any> {
+            let pollResponse = new Promise<any>((resolve, reject) => {
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", url, true);
+                xhr.onload = event => resolve(xhr.response);
+                xhr.onerror = event => reject(xhr.statusText);
+                xhr.send();
+            });
+
+            return pollResponse;
+        };
+
+        const pollUrl:string = polls[this.questionIdx];
+        let pollResponse = fetchPoll(pollUrl);
 
         pollResponse.then(pollData => {
             var poll:Poll = JSON.parse(pollData);
-            console.log(poll.question);
             console.log(poll.answers);
             this.poll = poll;
         }).catch(error => {
@@ -77,4 +98,4 @@ var HEROES:Hero[] = [
     {"id": 20, "name": "Tornado"}
 ];
 
-bootstrap(AppComponent);
+bootstrap(QuestionnaireComponent);
