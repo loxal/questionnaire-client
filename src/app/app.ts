@@ -7,12 +7,18 @@ module DTO {
         id: string;
         question:  string;
         options:   string[];
-        answers:   string[];
+        multipleAnswers: boolean;
     }
 
     export interface Review {
         correct:number;
         wrong:number;
+    }
+
+    export interface Vote {
+        referencePoll:string
+        answers: number[]
+        correct: boolean
     }
 }
 
@@ -20,7 +26,7 @@ module DTO {
     directives: [FORM_DIRECTIVES, CORE_DIRECTIVES],
     selector: 'main',
     styleUrls: ["template/style.css"],
-    templateUrl: "template/question.html"
+    templateUrl: "template/question.html",
 })
 class QuestionnaireComponent {
     private polls:Array<string> = [
@@ -40,6 +46,7 @@ class QuestionnaireComponent {
     private questionIdx:number = 0;
 
     private onAnswer(answer:string):void {
+        this.vote();
         QuestionnaireComponent.resetAnswerOptions();
         console.warn(this.questionIdx);
         if (this.questionIdx == this.polls.length - 1) {
@@ -49,6 +56,31 @@ class QuestionnaireComponent {
             this.questionIdx++;
             this.showNextPoll();
         }
+    }
+
+    private vote():void {
+        let vote = function (vote:any):Promise<any> {
+            return new Promise<any>((resolve, reject) => {
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "votePostURL", true);
+                xhr.onload = event => resolve(xhr.response);
+                xhr.onerror = event => reject(xhr.statusText);
+                xhr.send(vote);
+            });
+        };
+
+        let voteResponse:Promise<any> = vote({
+            referencePoll: "simpsons-12b94e2ef-6901-4193-90d4-e63cbf89f841",
+            answers: [1]
+        });
+
+        voteResponse.then(data => {
+            console.info(data);
+            //let poll:Poll = JSON.parse(data.toString());
+            //this.poll = poll;
+        }).catch(error => {
+            console.error(error);
+        });
     }
 
     private showNextPoll():void {
