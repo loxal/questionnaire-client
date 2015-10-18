@@ -1,10 +1,11 @@
+<!DOCTYPE html>
 <!--
   ~ Copyright 2015 Alexander Orlov <alexander.orlov@loxal.net>. All rights reserved.
   -->
 
 <div *ng-if="poll">
     <strong>{{ poll.question }}</strong>
-    <ol id="answerOptions">
+    <ol class="heroes" id="answerOptions">
         <li *ng-for="#answer of poll.answers">
             <input type="radio" name="answers"
                    (click)="onAnswer(answer)"
@@ -15,21 +16,13 @@
     </ol>
 </div>
 
-<h1>{{title}}</h1>
-<div *ng-if="selectedHero">
-    <h2>{{selectedHero.name}} details!</h2>
+<div *ng-if="review">
+    <strong>Review</strong>
+    <dl>
+        <dt>Correct</dt>
+        <dd>{{ review.correct }}</dd>
 
-    <div><label>id: </label>{{selectedHero.id}}</div>
-    <div>
-        <label>name: </label>
-        <input [(ng-model)]="selectedHero.name" placeholder="name"/>
-    </div>
+        <dt>Wrong</dt>
+        <dd>{{ review.wrong }}</dd>
+    </dl>
 </div>
-<h2>My Heroes</h2>
-<ul class="heroes">
-    <li *ng-for="#hero of heroes"
-        [ng-class]="getSelectedClass(hero)"
-        (click)="onSelect(hero)">
-        <span class="badge">{{hero.id}}</span> {{hero.name}}</a>
-    </li>
-</ul>
