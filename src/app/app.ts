@@ -6,6 +6,7 @@ module DTO {
     export interface Poll {
         id: string;
         question:  string;
+        options:   string[];
         answers:   string[];
     }
 
@@ -23,16 +24,16 @@ module DTO {
 })
 class QuestionnaireComponent {
     private polls:Array<string> = [
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-10ca791ed-a4a4-48f7-95a8-51df6c9e8bca",
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-2c9fed178-d6d4-436c-86cb-fef2f4d04e20",
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-3b170a2f4-d703-4259-9a6c-1a622416f5ea",
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-4bd8b792f-d805-49a3-9b61-56606d8656fc",
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-50c73578d-71b0-43b1-a585-3f2de6183b5d",
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-6b336bd70-9871-4ef8-bddc-3f0de353ee9c",
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-76d06b2eb-d723-4b9b-859d-d33c86ad5124",
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-870bfc198-d28e-4d59-9826-d3c1b37d292e",
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-9546b4f95-c432-4466-9756-37046762f278",
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-10963314a1-2953-44d7-9afc-5434591eddf9",
+        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-12b94e2ef-6901-4193-90d4-e63cbf89f841",
+        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-20eb2ea9c-4c79-419c-bad0-a918a78e4c91",
+        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-3ed406e0c-c45c-470c-a8a4-59eb773ffddc",
+        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-40297cc17-6cbd-4dd5-a0df-a5df2d53d01d",
+        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-5924d9543-fd4c-4806-9beb-2246a5375cc4",
+        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-62f3f35cc-7e0a-4118-a8a0-199b5912c41c",
+        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-758a912f3-89bc-4911-a1c0-4e4d876c8020",
+        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-85256bad5-5cc2-44ac-8d59-cd37a2d3d397",
+        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-973b60da0-6699-402e-b565-d8087f2a5cb9",
+        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-107f01e097-a7de-4e81-be2a-1376f239cf2b",
     ];
     private poll:Poll;
     private review:Review;
@@ -73,7 +74,7 @@ class QuestionnaireComponent {
     }
 
     private static resetAnswerOptions():void {
-        let answerOptions:Array<any> = new Array(document.getElementsByName("answers"));
+        let answerOptions:NodeListOf<Element> = document.getElementsByName("options");
         for (let answerOption of answerOptions) {
             answerOption.checked = false;
         }

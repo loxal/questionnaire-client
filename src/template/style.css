@@ -2,21 +2,21 @@
  * Copyright 2015 Alexander Orlov <alexander.orlov@loxal.net>. All rights reserved.
  */
 
-.heroes {
+.options {
     list-style-type: none;
     margin-left: 1em;
     padding: 0;
     width: 20em;
 }
 
-.heroes li {
+.options li {
     cursor: pointer;
     position: relative;
     left: 0;
     transition: all 0.2s ease;
 }
 
-.heroes li:hover {
+.options li:hover {
     color: #369;
     background-color: #eee;
     left: .1em;

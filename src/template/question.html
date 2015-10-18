@@ -5,12 +5,12 @@
 
 <div *ng-if="poll">
     <strong>{{ poll.question }}</strong>
-    <ol class="heroes" id="answerOptions">
-        <li *ng-for="#answer of poll.answers">
-            <input type="radio" name="answers"
-                   (click)="onAnswer(answer)"
+    <ol class="options" id="answerOptions">
+        <li *ng-for="#option of poll.options">
+            <input type="radio" name="options"
+                   (click)="onAnswer(option)"
             >
-            {{ answer }}
+            {{ option }}
             </input>
         </li>
     </ol>
