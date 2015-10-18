@@ -8,9 +8,10 @@ module DTO {
         question:  string;
         answers:   string[];
     }
+
     export interface Review {
-        correct:  number;
-        wrong:   number;
+        correct:number;
+        wrong:number;
     }
 }
 
@@ -41,11 +42,36 @@ class QuestionnaireComponent {
         QuestionnaireComponent.resetAnswerOptions();
         console.warn(this.questionIdx);
         if (this.questionIdx == this.polls.length - 1) {
-            this.review = {correct: 12, wrong: 4}
+            this.review = {correct: 12, wrong: 4};
+            this.poll = null;
         } else {
             this.questionIdx++;
-            this.fetchPoll();
+            this.showNextPoll();
         }
+    }
+
+    private showNextPoll():void {
+        let fetchPoll = function (url:string):Promise<any> {
+            let fetchedPoll = new Promise<any>((resolve, reject) => {
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", url, true);
+                xhr.onload = event => resolve(xhr.response);
+                xhr.onerror = event => reject(xhr.statusText);
+                xhr.send();
+            });
+
+            return fetchedPoll;
+        };
+
+        const pollUrl:string = this.polls[this.questionIdx];
+        let pollResponse = fetchPoll(pollUrl);
+
+        pollResponse.then(pollData => {
+            let poll:Poll = JSON.parse(pollData);
+            this.poll = poll;
+        }).catch(error => {
+            console.error(error);
+        });
     }
 
     private static resetAnswerOptions():void {
@@ -55,34 +81,8 @@ class QuestionnaireComponent {
         }
     }
 
-    private fetchPoll() {
-        let fetchPoll = function (url:string):Promise<any> {
-            let pollResponse = new Promise<any>((resolve, reject) => {
-                let xhr = new XMLHttpRequest();
-                xhr.open("GET", url, true);
-                xhr.onload = event => resolve(xhr.response);
-                xhr.onerror = event => reject(xhr.statusText);
-                xhr.send();
-            });
-
-            return pollResponse;
-        };
-
-        const pollUrl:string = this.polls[this.questionIdx];
-        let pollResponse = fetchPoll(pollUrl);
-
-        pollResponse.then(pollData => {
-            var poll:Poll = JSON.parse(pollData);
-            console.log(poll.answers);
-            this.poll = poll;
-            QuestionnaireComponent.resetAnswerOptions();
-        }).catch(error => {
-            console.log(error);
-        });
-    }
-
     constructor() {
-        this.fetchPoll();
+        this.showNextPoll();
     }
 }
 
