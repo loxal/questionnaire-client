@@ -51,23 +51,21 @@ class QuestionnaireComponent {
     }
 
     private showNextPoll():void {
-        let fetchPoll = function (url:string):Promise<any> {
-            let fetchedPoll = new Promise<any>((resolve, reject) => {
+        const pollUrl:string = this.polls[this.questionIdx];
+
+        let fetchPoll = function (url:string):Promise<Poll> {
+            return new Promise<Poll>((resolve, reject) => {
                 let xhr = new XMLHttpRequest();
                 xhr.open("GET", url, true);
                 xhr.onload = event => resolve(xhr.response);
                 xhr.onerror = event => reject(xhr.statusText);
                 xhr.send();
             });
-
-            return fetchedPoll;
         };
-
-        const pollUrl:string = this.polls[this.questionIdx];
-        let pollResponse = fetchPoll(pollUrl);
+        let pollResponse:Promise<Poll> = fetchPoll(pollUrl);
 
         pollResponse.then(pollData => {
-            let poll:Poll = JSON.parse(pollData);
+            let poll:Poll = JSON.parse(pollData.toString());
             this.poll = poll;
         }).catch(error => {
             console.error(error);
@@ -75,8 +73,8 @@ class QuestionnaireComponent {
     }
 
     private static resetAnswerOptions():void {
-        let answerOptions:NodeListOf<Element> = document.getElementsByName("answers");
-        for (let answerOption:HTMLInputElement of answerOptions) {
+        let answerOptions:Array<any> = new Array(document.getElementsByName("answers"));
+        for (let answerOption of answerOptions) {
             answerOption.checked = false;
         }
     }
