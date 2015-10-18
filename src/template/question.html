@@ -4,12 +4,13 @@
 
 <div *ng-if="poll">
     <strong>{{ poll.question }}</strong>
-    <ol>
-        <li *ng-for="#answer of poll.answers"
-        >
+    <ol id="answerOptions">
+        <li *ng-for="#answer of poll.answers">
             <input type="radio" name="answers"
                    (click)="onAnswer(answer)"
-            >{{ answer }}</input>
+            >
+            {{ answer }}
+            </input>
         </li>
     </ol>
 </div>

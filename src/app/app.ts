@@ -1,5 +1,6 @@
 import {Component, bootstrap, FORM_DIRECTIVES, CORE_DIRECTIVES} from 'angular2/angular2';
 import Poll = DTO.Poll;
+import {CheckboxControlValueAccessor} from "../../node_modules/angular2/src/core/forms/directives/checkbox_value_accessor";
 
 module DTO {
     export interface Poll {
@@ -20,16 +21,23 @@ class QuestionnaireComponent {
     public title = 'Tour of Heroes';
     public selectedHero:Hero;
     public poll:Poll;
-    public questionIdx: number = 0;
+    public questionIdx:number = 0;
 
-    onAnswer(answer:string) {
-        console.log(answer);
-        console.log(this.poll.answers);
+    private onAnswer(answer:string):void {
+        this.resetAnswerOptions();
         this.questionIdx++;
         this.getStuff();
     }
 
-    getStuff() {
+
+    private resetAnswerOptions():void {
+        let answerOptions:NodeListOf<Element> = document.getElementsByName("answers");
+        for (let answerOption:HTMLInputElement of answerOptions) {
+            answerOption.checked = false;
+        }
+    }
+
+    private getStuff() {
         const polls:Array<string> = [
             "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-10ca791ed-a4a4-48f7-95a8-51df6c9e8bca",
             "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-2c9fed178-d6d4-436c-86cb-fef2f4d04e20",
@@ -43,7 +51,7 @@ class QuestionnaireComponent {
             "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-10963314a1-2953-44d7-9afc-5434591eddf9",
         ];
 
-        let fetchPoll = function (url: string): Promise<any> {
+        let fetchPoll = function (url:string):Promise<any> {
             let pollResponse = new Promise<any>((resolve, reject) => {
                 let xhr = new XMLHttpRequest();
                 xhr.open("GET", url, true);
@@ -62,6 +70,7 @@ class QuestionnaireComponent {
             var poll:Poll = JSON.parse(pollData);
             console.log(poll.answers);
             this.poll = poll;
+            this.resetAnswerOptions();
         }).catch(error => {
             console.log(error);
         });
