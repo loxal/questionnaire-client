@@ -6,9 +6,9 @@
 <div *ng-if="poll">
     <strong>{{ poll.question }}</strong>
     <ol class="options" id="answerOptions">
-        <li *ng-for="#option of poll.options">
+        <li *ng-for="#option of poll.options; #idx = index">
             <input type="radio" name="options"
-                   (click)="onAnswer(option)"
+                   (click)="onAnswer(idx)"
             >
             {{ option }}
             </input>
