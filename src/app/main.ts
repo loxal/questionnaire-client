@@ -1,8 +1,8 @@
 import {Component, bootstrap, FORM_DIRECTIVES, CORE_DIRECTIVES} from "angular2/angular2";
 import Poll = DTO.Poll;
-import Review = DTO.Review;
 import Creation = DTO.Creation;
 import Vote = DTO.Vote;
+import Review = DTO.Review;
 
 module DTO {
     export interface Poll {
@@ -15,6 +15,11 @@ module DTO {
     export interface Review {
         correct:number;
         wrong:number;
+
+        //constructor() {
+        //    this.correct = 0;
+        //    this.wrong = 0;
+        //}
     }
 
     export interface Vote {
@@ -31,7 +36,7 @@ module DTO {
 
 @Component({
     directives: [FORM_DIRECTIVES, CORE_DIRECTIVES],
-    selector: 'main',
+    selector: "main",
     styleUrls: ["template/style.css"],
     templateUrl: "template/question.html",
 })
@@ -39,16 +44,16 @@ class QuestionnaireComponent {
     private  pollEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll";
     private  voteEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/vote";
     private polls:Array<string> = [
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-12b94e2ef-6901-4193-90d4-e63cbf89f841",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-20eb2ea9c-4c79-419c-bad0-a918a78e4c91",
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-3ed406e0c-c45c-470c-a8a4-59eb773ffddc",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-40297cc17-6cbd-4dd5-a0df-a5df2d53d01d",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-5924d9543-fd4c-4806-9beb-2246a5375cc4",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-62f3f35cc-7e0a-4118-a8a0-199b5912c41c",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-758a912f3-89bc-4911-a1c0-4e4d876c8020",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-85256bad5-5cc2-44ac-8d59-cd37a2d3d397",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-973b60da0-6699-402e-b565-d8087f2a5cb9",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-107f01e097-a7de-4e81-be2a-1376f239cf2b",
+        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-100885630-0872-4a83-80b7-3070e7de8d49",
+        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-290534e2b-a676-443e-bb88-2a3756faac5f",
+        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-3801852cf-a0eb-42cd-be59-99f0c55cfa94",
+        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-4a440109e-cedb-4427-8edb-61c4c99928cf",
+        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-5eed90a7e-f0e9-4848-9c43-e35baabbf3a2",
+        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-63ee0b535-f0b3-4ad4-b39c-9d7b5f7522c5",
+        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-7d67d76aa-57e9-4581-95b0-43283c4ab237",
+        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-8a2c8120f-74e2-4368-8711-687468944f98",
+        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-99c472889-245c-48b9-87bf-335dc0ceff11",
+        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-104058ebfa-a3f1-494c-98b8-21daf83476fb",
     ];
     private poll:Poll;
     private review:Review;
@@ -62,19 +67,9 @@ class QuestionnaireComponent {
         };
         this.vote(vote);
         QuestionnaireComponent.resetAnswerOptions();
-        console.info("this.questionIdx: ", this.questionIdx);
-        if (this.questionIdx == this.polls.length - 1) {
-            this.review = {correct: 12, wrong: 4};
-            this.poll = null;
-            this.reviewVotes();
-        } else {
-            this.questionIdx++;
-            this.showNextPoll();
-        }
     }
 
     private reviewVotes():void {
-        console.error(this.votes);
         this.votes.forEach(voteId=> {
             const voteUrl = this.voteEndpoint + "/" + voteId;
             let fetchVote = function (url:string):Promise<any> {
@@ -87,10 +82,16 @@ class QuestionnaireComponent {
                 });
             };
             let voteResponse:Promise<any> = fetchVote(voteUrl);
+            this.review = {correct: 0, wrong: 0};
 
             voteResponse.then(data => {
                 let voteReviewed:Vote = JSON.parse(data.toString());
-                console.warn(voteReviewed)
+                if (voteReviewed.correct) {
+                    this.review.correct++;
+                } else {
+                    this.review.wrong++;
+                }
+                this.review = {correct: this.review.correct, wrong: this.review.wrong};
             }).catch(error => {
                 console.error(error);
             });
@@ -115,8 +116,15 @@ class QuestionnaireComponent {
         voteResponse.then(data => {
             let creation:Creation = JSON.parse(data.toString());
             this.votes.push(creation.id);
-            console.warn(creation.id);
-            console.warn(this.votes);
+            console.info("this.questionIdx: ", vote.referencePoll);
+
+            if (this.questionIdx == this.polls.length - 1) {
+                this.poll = null;
+                this.reviewVotes();
+            } else {
+                this.questionIdx++;
+                this.showNextPoll();
+            }
         }).catch(error => {
             console.error(error);
         });
