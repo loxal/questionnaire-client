@@ -19,7 +19,13 @@
       "email": "alexander.orlov@loxal.net"
     }
   ],
-  "keywords": [],
+  "keywords": [
+    "client",
+    "microservice",
+    "angularjs",
+    "angularjs2",
+    "angular2"
+  ],
   "author": "Alexander Orlov <alexander.orlov@loxal.net>",
   "license": "ISC",
   "dependencies": {
@@ -27,7 +33,7 @@
     "systemjs": "0.19.5"
   },
   "devDependencies": {
-    "live-server": "^0.8.1",
+    "live-server": "^0.8.2",
     "typescript": "^1.6.2"
   },
   "repository": {

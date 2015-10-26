@@ -40,33 +40,33 @@ module DTO {
     styleUrls: ["template/style.css"],
     templateUrl: "template/question.html",
 })
-class QuestionnaireComponent {
+class Questionnaire {
     private  pollEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll";
     private  voteEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/vote";
     private polls:Array<string> = [
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-100885630-0872-4a83-80b7-3070e7de8d49",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-290534e2b-a676-443e-bb88-2a3756faac5f",
-        "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-3801852cf-a0eb-42cd-be59-99f0c55cfa94",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-4a440109e-cedb-4427-8edb-61c4c99928cf",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-5eed90a7e-f0e9-4848-9c43-e35baabbf3a2",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-63ee0b535-f0b3-4ad4-b39c-9d7b5f7522c5",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-7d67d76aa-57e9-4581-95b0-43283c4ab237",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-8a2c8120f-74e2-4368-8711-687468944f98",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-99c472889-245c-48b9-87bf-335dc0ceff11",
-        //"https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll/simpsons-104058ebfa-a3f1-494c-98b8-21daf83476fb",
+        this.pollEndpoint + "/simpsons-100885630-0872-4a83-80b7-3070e7de8d49",
+        //"this.pollEndpoint + "/simpsons-290534e2b-a676-443e-bb88-2a3756faac5f",
+        //"this.pollEndpoint + "/simpsons-3801852cf-a0eb-42cd-be59-99f0c55cfa94",
+        //"this.pollEndpoint + "/simpsons-4a440109e-cedb-4427-8edb-61c4c99928cf",
+        //"this.pollEndpoint + "/simpsons-5eed90a7e-f0e9-4848-9c43-e35baabbf3a2",
+        //"this.pollEndpoint + "/simpsons-63ee0b535-f0b3-4ad4-b39c-9d7b5f7522c5",
+        //"this.pollEndpoint + "/simpsons-7d67d76aa-57e9-4581-95b0-43283c4ab237",
+        //"this.pollEndpoint + "/simpsons-8a2c8120f-74e2-4368-8711-687468944f98",
+        //"this.pollEndpoint + "/simpsons-99c472889-245c-48b9-87bf-335dc0ceff11",
+        this.pollEndpoint + "/simpsons-104058ebfa-a3f1-494c-98b8-21daf83476fb"
     ];
     private poll:Poll;
     private review:Review;
     private questionIdx:number = 0;
     private votes:string[] = [];
 
-    private onAnswer(idx:number):void {
+    private onAnswer(index:number):void {
         let vote = {
             referencePoll: this.poll.id,
-            answers: [idx]
+            answers: [index]
         };
         this.vote(vote);
-        QuestionnaireComponent.resetAnswerOptions();
+        Questionnaire.resetAnswerOptions();
     }
 
     private reviewVotes():void {
@@ -164,4 +164,4 @@ class QuestionnaireComponent {
     }
 }
 
-bootstrap(QuestionnaireComponent);
+bootstrap(Questionnaire);
