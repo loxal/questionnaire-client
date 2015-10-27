@@ -34,7 +34,7 @@ module DTO {
             return this._wrong;
         }
 
-        private total:number;
+        private _total:number;
         get total() {
             return this.correct + this.wrong;
         }
