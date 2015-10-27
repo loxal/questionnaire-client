@@ -1,4 +1,4 @@
-import {Component, bootstrap, FORM_DIRECTIVES, CORE_DIRECTIVES} from "angular2/angular2";
+import {Component, bootstrap, NgFor, NgIf} from "angular2/angular2";
 import Poll = DTO.Poll;
 import Creation = DTO.Creation;
 import Vote = DTO.Vote;
@@ -15,8 +15,29 @@ module DTO {
     }
 
     export class Review {
-        correct:number;
-        wrong:number;
+        private _correct:number;
+        set correct(v:number) {
+            this._correct = v;
+        }
+
+        get correct() {
+            return this._correct;
+        }
+
+        private _wrong:number;
+
+        set wrong(v:number) {
+            this._wrong = v;
+        }
+
+        get wrong() {
+            return this._wrong;
+        }
+
+        private total:number;
+        get total() {
+            return this.correct + this.wrong;
+        }
 
         constructor(correct:number, wrong:number) {
             this.correct = correct;
@@ -37,7 +58,7 @@ module DTO {
 }
 
 @Component({
-    directives: [FORM_DIRECTIVES, CORE_DIRECTIVES],
+    directives: [NgFor, NgIf],
     selector: "main",
     styleUrls: ["template/style.css"],
     templateUrl: "template/question.html",
@@ -60,8 +81,8 @@ class Questionnaire {
     private questionIdx:number = 0;
     private votes:string[] = [];
 
-    private onAnswer(index:number):void {
-        Questionnaire.resetAnswerOptions();
+    private onAnswer(index:number, $event:any):void {
+        $event.target.checked = false;
 
         let vote = {
             referencePoll: this.poll.id,
@@ -71,7 +92,7 @@ class Questionnaire {
     }
 
     private reviewVotes():void {
-        this.votes.forEach(voteId=> {
+        this.votes.forEach(voteId => {
             const voteUrl = DTO.voteEndpoint + "/" + voteId;
             let fetchVote = function (url:string):Promise<any> {
                 return new Promise<any>((resolve, reject) => {
@@ -149,13 +170,6 @@ class Questionnaire {
         }).catch(error => {
             console.error(error);
         });
-    }
-
-    private static resetAnswerOptions():void {
-        let answerOptions:NodeListOf<Element> = document.getElementsByName("options");
-        for (let answerOption of answerOptions) {
-            answerOption.checked = false;
-        }
     }
 
     constructor() {

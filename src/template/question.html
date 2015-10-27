@@ -8,7 +8,7 @@
     <ol class="options" id="answerOptions">
         <li *ng-for="#option of poll.options; #index = index">
             <input type="radio" name="options"
-                   (click)="onAnswer(index)"
+                   (click)="onAnswer(index, $event)"
             >
             {{ option }}
             </input>
@@ -26,6 +26,6 @@
         <dd>{{ review.wrong }}</dd>
 
         <dt>Total</dt>
-        <dd>{{ review.correct + review.wrong }}</dd>
+        <dd>{{ review.total }}</dd>
     </dl>
 </div>
