@@ -2,9 +2,11 @@ import {Component, bootstrap, FORM_DIRECTIVES, CORE_DIRECTIVES} from "angular2/a
 import Poll = DTO.Poll;
 import Creation = DTO.Creation;
 import Vote = DTO.Vote;
-import Review = DTO.Review;
 
 module DTO {
+    export const voteEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/vote";
+    export const pollEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll";
+
     export interface Poll {
         id: string;
         question:  string;
@@ -12,14 +14,14 @@ module DTO {
         multipleAnswers: boolean;
     }
 
-    export interface Review {
+    export class Review {
         correct:number;
         wrong:number;
 
-        //constructor() {
-        //    this.correct = 0;
-        //    this.wrong = 0;
-        //}
+        constructor(correct:number, wrong:number) {
+            this.correct = correct;
+            this.wrong = wrong;
+        }
     }
 
     export interface Vote {
@@ -41,37 +43,36 @@ module DTO {
     templateUrl: "template/question.html",
 })
 class Questionnaire {
-    private  pollEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll";
-    private  voteEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/vote";
     private polls:Array<string> = [
-        this.pollEndpoint + "/simpsons-100885630-0872-4a83-80b7-3070e7de8d49",
-        //"this.pollEndpoint + "/simpsons-290534e2b-a676-443e-bb88-2a3756faac5f",
-        //"this.pollEndpoint + "/simpsons-3801852cf-a0eb-42cd-be59-99f0c55cfa94",
-        //"this.pollEndpoint + "/simpsons-4a440109e-cedb-4427-8edb-61c4c99928cf",
-        //"this.pollEndpoint + "/simpsons-5eed90a7e-f0e9-4848-9c43-e35baabbf3a2",
-        //"this.pollEndpoint + "/simpsons-63ee0b535-f0b3-4ad4-b39c-9d7b5f7522c5",
-        //"this.pollEndpoint + "/simpsons-7d67d76aa-57e9-4581-95b0-43283c4ab237",
-        //"this.pollEndpoint + "/simpsons-8a2c8120f-74e2-4368-8711-687468944f98",
-        //"this.pollEndpoint + "/simpsons-99c472889-245c-48b9-87bf-335dc0ceff11",
-        this.pollEndpoint + "/simpsons-104058ebfa-a3f1-494c-98b8-21daf83476fb"
+        DTO.pollEndpoint + "/simpsons-100885630-0872-4a83-80b7-3070e7de8d49",
+        //"DTO.pollEndpoint + "/simpsons-290534e2b-a676-443e-bb88-2a3756faac5f",
+        //"DTO.pollEndpoint + "/simpsons-3801852cf-a0eb-42cd-be59-99f0c55cfa94",
+        //"DTO.pollEndpoint + "/simpsons-4a440109e-cedb-4427-8edb-61c4c99928cf",
+        //"DTO.pollEndpoint + "/simpsons-5eed90a7e-f0e9-4848-9c43-e35baabbf3a2",
+        //"DTO.pollEndpoint + "/simpsons-63ee0b535-f0b3-4ad4-b39c-9d7b5f7522c5",
+        //"DTO.pollEndpoint + "/simpsons-7d67d76aa-57e9-4581-95b0-43283c4ab237",
+        //"DTO.pollEndpoint + "/simpsons-8a2c8120f-74e2-4368-8711-687468944f98",
+        //"DTO.pollEndpoint + "/simpsons-99c472889-245c-48b9-87bf-335dc0ceff11",
+        DTO.pollEndpoint + "/simpsons-104058ebfa-a3f1-494c-98b8-21daf83476fb"
     ];
     private poll:Poll;
-    private review:Review;
+    private review:DTO.Review;
     private questionIdx:number = 0;
     private votes:string[] = [];
 
     private onAnswer(index:number):void {
+        Questionnaire.resetAnswerOptions();
+
         let vote = {
             referencePoll: this.poll.id,
             answers: [index]
         };
-        this.vote(vote);
-        Questionnaire.resetAnswerOptions();
+        this.castVote(vote);
     }
 
     private reviewVotes():void {
         this.votes.forEach(voteId=> {
-            const voteUrl = this.voteEndpoint + "/" + voteId;
+            const voteUrl = DTO.voteEndpoint + "/" + voteId;
             let fetchVote = function (url:string):Promise<any> {
                 return new Promise<any>((resolve, reject) => {
                     let xhr = new XMLHttpRequest();
@@ -82,7 +83,7 @@ class Questionnaire {
                 });
             };
             let voteResponse:Promise<any> = fetchVote(voteUrl);
-            this.review = {correct: 0, wrong: 0};
+            this.review = new DTO.Review(0, 0);
 
             voteResponse.then(data => {
                 let voteReviewed:Vote = JSON.parse(data.toString());
@@ -91,19 +92,17 @@ class Questionnaire {
                 } else {
                     this.review.wrong++;
                 }
-                this.review = {correct: this.review.correct, wrong: this.review.wrong};
             }).catch(error => {
                 console.error(error);
             });
         });
     }
 
-    private vote(vote:Vote):void {
+    private castVote(vote:Vote):void {
         let castVote = function (vote:any):Promise<any> {
-            const voteEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/vote";
             return new Promise<any>((resolve, reject) => {
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", voteEndpoint, true);
+                xhr.open("POST", DTO.voteEndpoint, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onload = event => resolve(xhr.response);
                 xhr.onerror = event => reject(xhr.statusText);
