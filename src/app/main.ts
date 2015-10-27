@@ -19,17 +19,14 @@ module DTO {
         set correct(v:number) {
             this._correct = v;
         }
-
         get correct() {
             return this._correct;
         }
 
         private _wrong:number;
-
         set wrong(v:number) {
             this._wrong = v;
         }
-
         get wrong() {
             return this._wrong;
         }
@@ -80,6 +77,11 @@ class Questionnaire {
     private review:DTO.Review;
     private questionIdx:number = 0;
     private votes:string[] = [];
+
+    private onPlayAgain() {
+        this.review = null;
+        this.constructor();
+    }
 
     private onAnswer(index:number, $event:any):void {
         $event.target.checked = false;
