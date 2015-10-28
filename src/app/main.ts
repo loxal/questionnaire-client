@@ -7,11 +7,18 @@ module DTO {
     export const voteEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/vote";
     export const pollEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll";
 
-    export interface Poll {
+    export class Poll {
         id: string;
         question:  string;
         options:   string[];
         multipleAnswers: boolean;
+
+        constructor(id:string, question:string, options:string[], multipleAnswers:boolean = false) {
+            this.id = id;
+            this.question = question;
+            this.options = options;
+            this.multipleAnswers = multipleAnswers;
+        }
     }
 
     export class Review {
@@ -122,8 +129,8 @@ class Questionnaire {
     }
 
     private castVote(vote:Vote):void {
-        let castVote = function (vote:any):Promise<any> {
-            return new Promise<any>((resolve, reject) => {
+        let castVote = function (vote:Vote):Promise<Vote> {
+            return new Promise<Vote>((resolve, reject) => {
                 let xhr = new XMLHttpRequest();
                 xhr.open("POST", DTO.voteEndpoint, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
@@ -133,7 +140,7 @@ class Questionnaire {
             });
         };
 
-        let voteResponse:Promise<any> = castVote(vote);
+        let voteResponse:Promise<Vote> = castVote(vote);
 
         voteResponse.then(data => {
             let creation:Creation = JSON.parse(data.toString());

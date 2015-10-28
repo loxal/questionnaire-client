@@ -7,7 +7,10 @@
     <strong>{{ poll.question }}</strong>
     <ol class="options" id="answerOptions">
         <li *ng-for="#option of poll.options; #index = index">
-            <input type="radio" name="options"
+            <input *ng-if="!poll.multipleAnswers" type="radio" name="options"
+                   (click)="onAnswer(index, $event)"
+            >
+            <input *ng-if="poll.multipleAnswers" type="checkbox" name="options"
                    (click)="onAnswer(index, $event)"
             >
             {{ option }}
