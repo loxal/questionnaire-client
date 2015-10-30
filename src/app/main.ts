@@ -69,15 +69,15 @@ module DTO {
 })
 class Questionnaire {
     private polls:Array<string> = [
-        DTO.pollEndpoint + "/simpsons-100885630-0872-4a83-80b7-3070e7de8d49",
-        //"DTO.pollEndpoint + "/simpsons-290534e2b-a676-443e-bb88-2a3756faac5f",
-        //"DTO.pollEndpoint + "/simpsons-3801852cf-a0eb-42cd-be59-99f0c55cfa94",
-        //"DTO.pollEndpoint + "/simpsons-4a440109e-cedb-4427-8edb-61c4c99928cf",
-        //"DTO.pollEndpoint + "/simpsons-5eed90a7e-f0e9-4848-9c43-e35baabbf3a2",
-        //"DTO.pollEndpoint + "/simpsons-63ee0b535-f0b3-4ad4-b39c-9d7b5f7522c5",
-        //"DTO.pollEndpoint + "/simpsons-7d67d76aa-57e9-4581-95b0-43283c4ab237",
-        //"DTO.pollEndpoint + "/simpsons-8a2c8120f-74e2-4368-8711-687468944f98",
-        //"DTO.pollEndpoint + "/simpsons-99c472889-245c-48b9-87bf-335dc0ceff11",
+        //DTO.pollEndpoint + "/simpsons-100885630-0872-4a83-80b7-3070e7de8d49",
+        DTO.pollEndpoint + "/simpsons-290534e2b-a676-443e-bb88-2a3756faac5f",
+        //DTO.pollEndpoint + "/simpsons-3801852cf-a0eb-42cd-be59-99f0c55cfa94",
+        //DTO.pollEndpoint + "/simpsons-4a440109e-cedb-4427-8edb-61c4c99928cf",
+        //DTO.pollEndpoint + "/simpsons-5eed90a7e-f0e9-4848-9c43-e35baabbf3a2",
+        //DTO.pollEndpoint + "/simpsons-63ee0b535-f0b3-4ad4-b39c-9d7b5f7522c5",
+        //DTO.pollEndpoint + "/simpsons-7d67d76aa-57e9-4581-95b0-43283c4ab237",
+        //DTO.pollEndpoint + "/simpsons-8a2c8120f-74e2-4368-8711-687468944f98",
+        //DTO.pollEndpoint + "/simpsons-99c472889-245c-48b9-87bf-335dc0ceff11",
         DTO.pollEndpoint + "/simpsons-104058ebfa-a3f1-494c-98b8-21daf83476fb"
     ];
     private poll:Poll;
@@ -112,7 +112,7 @@ class Questionnaire {
                     xhr.send();
                 });
             };
-            let voteResponse:Promise<any> = fetchVote(voteUrl);
+            let voteResponse:Promise<Vote> = fetchVote(voteUrl);
             this.review = new DTO.Review(0, 0);
 
             voteResponse.then(data => {
