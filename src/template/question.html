@@ -6,7 +6,7 @@
 <div *ng-if="poll">
     <strong>{{ poll.question }}</strong>
     <ol class="options" id="answerOptions">
-        <li *ng-for="#option of poll.options; #index = index">
+        <li *ng-for="#option of poll.options; #index = index" (click)="onAnswer(index, $event)">
             <input *ng-if="!poll.multipleAnswers" type="radio" name="options"
                    (click)="onAnswer(index, $event)"
                    accesskey="1"
