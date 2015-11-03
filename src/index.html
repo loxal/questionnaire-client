@@ -10,8 +10,8 @@
     <meta name="viewport"
           content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"/>
     <title>Questionnaire</title>
-    <script src="../node_modules/systemjs/dist/system.src.js"></script>
-    <script src="../node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <script src="../node_modules/angular2/bundles/angular2.js"></script>
     <script>
         System.config({
             packages: {"main": {defaultExtension: "js"}}
@@ -20,4 +20,20 @@
     </script>
 </head>
 
+<body>
+<div class="app">
+    <div id="deviceready" class="blink">
+        <p class="event listening"></p>
+
+        <p class="event received"></p>
+    </div>
+</div>
+
+<script src="cordova.js"></script>
+<script src="www/js/index.js"></script>
+<script>
+    app.initialize();
+</script>
+
 <main>Loading…</main>
+</body>
