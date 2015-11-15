@@ -29,7 +29,7 @@
   "author": "Alexander Orlov <alexander.orlov@loxal.net>",
   "license": "ISC",
   "dependencies": {
-    "angular2": "2.0.0-alpha.44",
+    "angular2": "2.0.0-alpha.45",
     "systemjs": "0.19.5"
   },
   "devDependencies": {
