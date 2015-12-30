@@ -3,24 +3,25 @@
   ~ Copyright 2015 Alexander Orlov <alexander.orlov@loxal.net>. All rights reserved.
   -->
 
-<div *ng-if="poll">
+<div *ngIf="poll">
     <strong>{{ poll.question }}</strong>
     <ol class="options" id="answerOptions">
-        <li *ng-for="#option of poll.options; #index = index" (click)="onAnswer(index, $event)">
-            <input *ng-if="!poll.multipleAnswers" type="radio" name="options"
+        <li *ngFor="#option of poll.options; #index = index" (click)="onAnswer(index, $event)">
+            <input *ngIf="!poll.multipleAnswers" type="radio" name="options"
                    (click)="onAnswer(index, $event)"
                    accesskey="1"
+                   value="b"
             >
-            <input *ng-if="poll.multipleAnswers" type="checkbox" name="options"
+            <input *ngIf="poll.multipleAnswers" type="checkbox" name="options"
                    (click)="onAnswer(index, $event)"
+                   value="a"
             >
             {{ option }}
-            </input>
         </li>
     </ol>
 </div>
 
-<div *ng-if="review">
+<div *ngIf="review">
     <strong>Review</strong>
     <dl>
         <dt>Correct</dt>

@@ -1,12 +1,13 @@
-import {Component, bootstrap, NgFor, NgIf} from "angular2/angular2";
+import {Component} from 'angular2/core';
 import Poll = DTO.Poll;
 import Creation = DTO.Creation;
 import Vote = DTO.Vote;
-import * as Client from "./client"
+import {bootstrap} from "angular2/bootstrap";
 
 module DTO {
-    export const voteEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/vote";
-    export const pollEndpoint:string = "https://api.stage.yaas.io/loxal/rest-kit/v1/ballot/poll";
+    export const serviceEndpoint:string = "http://rest-kit.loxal.net";
+    export const voteEndpoint:string = serviceEndpoint + "/ballot/vote";
+    export const pollEndpoint:string = serviceEndpoint + "/ballot/poll";
 
     export class Poll {
         id: string;
@@ -63,23 +64,22 @@ module DTO {
 }
 
 @Component({
-    directives: [NgFor, NgIf],
     selector: "main",
     styleUrls: ["template/style.css"],
     templateUrl: "template/question.html",
 })
-class Questionnaire {
+export class Questionnaire {
     private polls:Array<string> = [
-        DTO.pollEndpoint + "/simpsons-100885630-0872-4a83-80b7-3070e7de8d49",
-        DTO.pollEndpoint + "/simpsons-290534e2b-a676-443e-bb88-2a3756faac5f",
-        DTO.pollEndpoint + "/simpsons-3801852cf-a0eb-42cd-be59-99f0c55cfa94",
-        DTO.pollEndpoint + "/simpsons-4a440109e-cedb-4427-8edb-61c4c99928cf",
-        DTO.pollEndpoint + "/simpsons-5eed90a7e-f0e9-4848-9c43-e35baabbf3a2",
-        DTO.pollEndpoint + "/simpsons-63ee0b535-f0b3-4ad4-b39c-9d7b5f7522c5",
-        DTO.pollEndpoint + "/simpsons-7d67d76aa-57e9-4581-95b0-43283c4ab237",
-        DTO.pollEndpoint + "/simpsons-8a2c8120f-74e2-4368-8711-687468944f98",
-        DTO.pollEndpoint + "/simpsons-99c472889-245c-48b9-87bf-335dc0ceff11",
-        DTO.pollEndpoint + "/simpsons-104058ebfa-a3f1-494c-98b8-21daf83476fb"
+        DTO.pollEndpoint + "/simpsons-17d5313d0-fa6d-470a-af2f-784b1fdcd1af",
+        DTO.pollEndpoint + "/simpsons-221402597-d15c-43a2-891c-e6074db0f457",
+        DTO.pollEndpoint + "/simpsons-3fa29491d-9cac-40de-b28d-cc3a4339798b",
+        DTO.pollEndpoint + "/simpsons-4e7b62074-66b8-4fdb-a075-badeef7d7e24",
+        DTO.pollEndpoint + "/simpsons-5885c885f-2466-4fd6-ab86-7e9f2d54f7a0",
+        DTO.pollEndpoint + "/simpsons-6351b1d7a-8da6-42ed-b57b-a4f173191139",
+        DTO.pollEndpoint + "/simpsons-7252f4c89-1682-4320-a165-5e907451c057",
+        DTO.pollEndpoint + "/simpsons-85472713d-0a38-4350-99f5-7d97c64c45ad",
+        DTO.pollEndpoint + "/simpsons-91b5e4fe9-1bb9-4852-ad35-a801f0339279",
+        DTO.pollEndpoint + "/simpsons-10238409f7-a825-457d-bca1-3294f67b2c1f"
     ];
     private poll:Poll;
     private review:DTO.Review;
@@ -133,6 +133,7 @@ class Questionnaire {
         let castVote = function (vote:Vote):Promise<Vote> {
             return new Promise<Vote>((resolve, reject) => {
                 let xhr = new XMLHttpRequest();
+                console.log(4);
                 xhr.open("POST", DTO.voteEndpoint, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onload = event => resolve(xhr.response);
@@ -184,8 +185,5 @@ class Questionnaire {
 
     constructor() {
         this.showNextPoll();
-        new Client();
     }
 }
-
-bootstrap(Questionnaire);
