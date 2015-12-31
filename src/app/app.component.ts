@@ -133,7 +133,6 @@ export class Questionnaire {
         let castVote = function (vote:Vote):Promise<Vote> {
             return new Promise<Vote>((resolve, reject) => {
                 let xhr = new XMLHttpRequest();
-                console.log(4);
                 xhr.open("POST", DTO.voteEndpoint, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onload = event => resolve(xhr.response);

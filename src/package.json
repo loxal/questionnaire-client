@@ -22,10 +22,7 @@
     }
   ],
   "keywords": [
-    "client",
     "microservice",
-    "angularjs",
-    "angularjs2",
     "angular2"
   ],
   "author": "Alexander Orlov <alexander.orlov@loxal.net>",
