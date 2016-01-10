@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component} from "angular2/core";
 import Poll = DTO.Poll;
 import Creation = DTO.Creation;
 import Vote = DTO.Vote;
