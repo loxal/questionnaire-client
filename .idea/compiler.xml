@@ -25,8 +25,24 @@
         <processorPath useClasspath="true" />
         <module name="questionnaire-client" />
       </profile>
+      <profile default="false" name="Annotation profile for client-template" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="client-template" />
+      </profile>
+      <profile default="false" name="Annotation profile for client-kit-loxal" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="client-kit-loxal" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="client-kit-loxal" target="1.8" />
+      <module name="client-template" target="1.8" />
       <module name="questionnaire-client" target="1.8" />
     </bytecodeTargetLevel>
   </component>

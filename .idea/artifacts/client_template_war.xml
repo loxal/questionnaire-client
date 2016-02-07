@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="client-template:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="rest-kit-loxal-1.0.0.war" />
+  </artifact>
+</component>
