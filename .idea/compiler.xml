@@ -39,8 +39,16 @@
         <processorPath useClasspath="true" />
         <module name="client-kit-loxal" />
       </profile>
+      <profile default="false" name="Annotation profile for browser-client-kit" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="browser-client-kit" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="browser-client-kit" target="1.8" />
       <module name="client-kit-loxal" target="1.8" />
       <module name="client-template" target="1.8" />
       <module name="questionnaire-client" target="1.8" />

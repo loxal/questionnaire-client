@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/client-kit-loxal.iml" filepath="$PROJECT_DIR$/.idea/client-kit-loxal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/browser-client-kit.iml" filepath="$PROJECT_DIR$/.idea/browser-client-kit.iml" />
     </modules>
   </component>
 </project>

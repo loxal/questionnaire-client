@@ -4,7 +4,6 @@
 
 package net.loxal.client
 
-
 fun main(vararg args: String) {
     console.log("2342!cdssdfdsfsdfdsfol!!!!!!!!!!!!ol $args")
 }
