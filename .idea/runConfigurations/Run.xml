@@ -1,5 +1,7 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run" type="JavascriptDebugType" factoryName="JavaScript Debug" uri="http://localhost:53339/browser-client-kit/target/production/browser-client-kit/index.html">
-    <method />
+  <configuration default="false" name="Run" type="JavascriptDebugType" factoryName="JavaScript Debug" uri="http://localhost:53339/browser-client-kit/target/production/browser-client-kit/main.html">
+    <method>
+      <option name="Make" enabled="true" />
+    </method>
   </configuration>
 </component>
