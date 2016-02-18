@@ -9,5 +9,5 @@ import kotlin.browser.document
 private val vote = document.getElementById("vote")
 
 fun main(vararg args: String) {
-    console.log("textContent: ${vote?.textContent}")
+    console.log("Text: ${vote?.textContent}")
 }

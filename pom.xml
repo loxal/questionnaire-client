@@ -52,22 +52,13 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.google.appengine</groupId>
-                <artifactId>appengine-maven-plugin</artifactId>
-                <version>1.9.32</version>
-            </plugin>
         </plugins>
     </build>
 
     <scm>
-        <connection>scm:git:git://github.com:loxal/rest-kit.git</connection>
-        <developerConnection>scm:git:git@github.com:loxal/rest-kit.git</developerConnection>
-        <url>https://github.com/loxal/rest-kit</url>
+        <connection>scm:git:git://github.com:loxal/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:git@github.com:loxal/${project.artifactId}.git</developerConnection>
+        <url>https://github.com/loxal/${project.artifactId}</url>
         <tag>HEAD</tag>
     </scm>
     <inceptionYear>2014</inceptionYear>
