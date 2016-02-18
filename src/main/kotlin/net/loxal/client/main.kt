@@ -6,9 +6,8 @@ package net.loxal.client
 
 import kotlin.browser.document
 
-val vote = document.getElementById("vote")
+private val vote = document.getElementById("vote")
 
 fun main(vararg args: String) {
     console.log("textContent: ${vote?.textContent}")
-    console.log("nodeValue: ${vote?.nodeValue}")
 }
