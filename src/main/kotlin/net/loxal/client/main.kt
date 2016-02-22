@@ -4,10 +4,7 @@
 
 package net.loxal.client
 
-import kotlin.browser.document
-
-private val vote = document.getElementById("vote")
 
 fun main(vararg args: String) {
-    console.log("Text: ${vote?.textContent}")
+    Quiz
 }
