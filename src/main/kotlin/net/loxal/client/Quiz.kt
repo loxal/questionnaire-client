@@ -6,26 +6,26 @@ package net.loxal.client
 
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLCollection
-import org.w3c.dom.NodeList
+import org.w3c.dom.HTMLInputElement
 import kotlin.browser.document
-import kotlin.dom.onClick
+import kotlin.dom.asElementList
 
 object Quiz {
-    private val answerOptions: NodeList = document.getElementsByName("answerOptions")
+    @Suppress("UNCHECKED_CAST")
+    private val answerOptions: List<HTMLInputElement> = document.getElementsByName("answerOptions").asElementList()  as List<HTMLInputElement>
     private val answerOption: HTMLCollection = document.getElementsByClassName("answerOption")
     private val vote: HTMLButtonElement = document.getElementById("vote") as HTMLButtonElement
 
     init {
-        vote.onClick { event ->
-            console.info(answerOption.length)
-            console.info(answerOption[0])
-            console.info(answerOption[0]?.nodeValue)
-            console.info(answerOption[0]?.textContent)
-
-            console.warn(answerOptions.length)
-            console.warn(answerOptions[0])
-            console.warn(answerOptions[1]?.nodeValue)
-            console.warn(answerOptions[2]?.textContent)
+        vote.onclick = { event ->
+            println(getCheckedAnswerOption())
         }
+    }
+
+    private fun getCheckedAnswerOption() = answerOptions.asSequence().indexOfFirst { it.checked }
+
+    fun test() {
+        println("TESTED")
+        vote.click()
     }
 }
